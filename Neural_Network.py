@@ -17,6 +17,7 @@ def plotSigmoid(range_val):
     y = sigmoid(x)
     plt.plot(x,y)
     
+
 #plotSigmoid(10)
 #plt.show()
     
@@ -47,7 +48,7 @@ class ConnectedLayer:
         self.bias = np.asmatrix(np.random.normal(0, 0.5, self.units)).T
         self.activation = sigmoid
         
-    def calc_grad(self):
+    def calcGrad(self):
         
         """
         Activation function
@@ -57,7 +58,7 @@ class ConnectedLayer:
         grad_activate = np.diag(np.diag(grad_mat))
         return grad_activate
     
-    def fwd_propagation(self, fx_dat):
+    def fwdPropagation(self, fx_dat):
         
         self.fx_dat = fx_dat
         if self.check_input_layer:
@@ -69,9 +70,9 @@ class ConnectedLayer:
             self.output = self.activation(self.weight_x_plus_bias)
             return self.output
         
-    def back_propagation(self, back_grad):
+    def backPropagation(self, back_grad):
         
-        back_grad_activation = self.calc_grad()
+        back_grad_activation = self.calcGrad()
         back_grad = np.asmatrix(np.dot(back_grad.T, back_grad_activation))
         
         self.back_grad_weight = np.asmatrix(self.fx_dat)
@@ -86,7 +87,120 @@ class ConnectedLayer:
         
         return self.back_grad
     
+class NeuralModel:
+    
+    def __init__(self):
+        self.layers = []
+        self.training_mse = []
+        self.plot_loss = plt.figure()
+        self.plot_ax_loss = self.plot_loss.add_subplot(1,1,1)
+        
+    def layer_addition(self, layer):
+        self.layers.append(layer)
+        
+    def build_network(self):
+        for i, layer in enumerate(self.layers[:]):
+            if i < 1:
+                layer.check_input_layer = True
+            else:
+                layer.initialize(self.layers[i-1].units)
+                
+    def train(self, fx_dat, y_dat, train_round, accuracy):
+        self.train_round = train_round
+        self.accuracy = accuracy
+        self.plot_ax_loss.hlines(self.accuracy, 0, self.train_round * 1.11)
+        
+        x_shape = np.shape(fx_dat)
+        for train_round_no in (train_round):
+            sum_loss = 0
+            
+            for row in range(x_shape[0]):
+                x_train_data = np.asmatrix(fx_dat[row, :]).T
+                y_train_data = np.asmatrix(y_dat[row, :]).T
+                
+                for layer in self.layers:
+                    x_train_data = layer.fwdPropagation(x_train_data)
+                    
+                loss, gradient = self.calLoss(y_train_data, x_train_data)
+                sum_loss = sum_loss + loss
+                
+                for layer in self.layers[:0:-1]:
+                    gradient = layer.backPropagation(gradient)
+                    
+                
+                mse = sum_loss / x_shape[0]
+                self.training_mse.append(mse)
+                
+                self.plotBackPropLoss()
+                
+                if mse < self.accuracy:
+                    return mse
+                
+                
+    def calLoss(self, orig_y_data, calc_y_data):
+        
+        self.loss = np.sum(np.power((orig_y_data - calc_y_data), 2))
+        self.loss_gradient = 2 * (orig_y_data - calc_y_data)
+        
+        return self.loss, self.loss_gradient
+    
+    def plotBackPropLoss(self):
+        
+        if self.plot_ax_loss.lines:
+            self.plot_ax_loss.remove(self.plot_ax_loss[0])
+            
+        self.plot_ax_loss(self.training_mse, "b+")
+        plt.ion()
+        plt.xlabel("train_round")
+        plt.ylabel("y_loss")
+        plt.show()
+        plt.pause(0.2)
+        
 
-
+#def testMatrix()
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
