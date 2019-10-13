@@ -176,7 +176,7 @@ def testMatrix():
     )
     
     model = NeuralModel()
-    model.layerAddition(ConnectedLayer(12))
+    model.layerAddition(ConnectedLayer(10))
     model.layerAddition(ConnectedLayer(25))
     model.layerAddition(ConnectedLayer(35))
     model.layerAddition(ConnectedLayer(2)) # output layer
