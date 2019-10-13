@@ -157,7 +157,8 @@ class NeuralModel:
         plt.pause(0.2)
         
 
-#def testMatrix()
+def testMatrix():
+    x = np.random.randn(10, 10)
         
         
         
