@@ -95,10 +95,10 @@ class NeuralModel:
         self.plot_loss = plt.figure()
         self.plot_ax_loss = self.plot_loss.add_subplot(1,1,1)
         
-    def layer_addition(self, layer):
+    def layerAddition(self, layer):
         self.layers.append(layer)
         
-    def build_network(self):
+    def buildNetwork(self):
         for i, layer in enumerate(self.layers[:]):
             if i < 1:
                 layer.check_input_layer = True
@@ -174,6 +174,18 @@ def testMatrix():
         ]
     )
     
+    model = NeuralModel()
+    model.layer_addition(ConnectedLayer(15))
+    model.layer_addition(ConnectedLayer(20))
+    model.layer_addition(ConnectedLayer(30))
+    model.layer_addition(ConnectedLayer(2)) # output layer
+    
+    model.buildNetwork()
+    
+    model.train(fx_dat=x, y_dat=y, train_round=50, accuracy=0.02)
+    
+if __name__== "__main__":
+    testMatrix()
         
         
         
