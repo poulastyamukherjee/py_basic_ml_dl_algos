@@ -182,7 +182,7 @@ def testMatrix():
     
     model.buildNetwork()
     
-    model.train(fx_dat=x, y_dat=y, train_round=50, accuracy=0.02)
+    model.train(fx_dat=x, y_dat=y, train_round=50, accuracy=0.03)
     
 if __name__== "__main__":
     testMatrix()
