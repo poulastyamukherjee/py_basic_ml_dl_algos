@@ -64,6 +64,7 @@ class ConnectedLayer:
         if self.check_input_layer:
             self.weight_x_plus_bias = fx_dat
             self.output = fx_dat
+            return fx_dat
         else:
             self.weight_x_plus_bias = (np.dot(self.weight, self.fx_dat) 
                                         - self.bias)
@@ -175,9 +176,9 @@ def testMatrix():
     )
     
     model = NeuralModel()
-    model.layerAddition(ConnectedLayer(15))
-    model.layerAddition(ConnectedLayer(20))
-    model.layerAddition(ConnectedLayer(30))
+    model.layerAddition(ConnectedLayer(10))
+    model.layerAddition(ConnectedLayer(25))
+    model.layerAddition(ConnectedLayer(35))
     model.layerAddition(ConnectedLayer(2)) # output layer
     
     model.buildNetwork()
