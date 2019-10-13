@@ -175,10 +175,10 @@ def testMatrix():
     )
     
     model = NeuralModel()
-    model.layer_addition(ConnectedLayer(15))
-    model.layer_addition(ConnectedLayer(20))
-    model.layer_addition(ConnectedLayer(30))
-    model.layer_addition(ConnectedLayer(2)) # output layer
+    model.layerAddition(ConnectedLayer(15))
+    model.layerAddition(ConnectedLayer(20))
+    model.layerAddition(ConnectedLayer(30))
+    model.layerAddition(ConnectedLayer(2)) # output layer
     
     model.buildNetwork()
     
