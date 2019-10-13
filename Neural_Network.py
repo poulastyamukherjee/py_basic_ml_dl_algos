@@ -111,7 +111,7 @@ class NeuralModel:
         self.plot_ax_loss.hlines(self.accuracy, 0, self.train_round * 1.11)
         
         x_shape = np.shape(fx_dat)
-        for train_round_no in (train_round):
+        for train_round_no in range(train_round):
             sum_loss = 0
             
             for row in range(x_shape[0]):
